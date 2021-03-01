@@ -1,0 +1,32 @@
+import matplotlib.pyplot as plt
+import numpy
+
+def hypothesis(input, output):
+    amount_data = numpy.size(input)
+    mean_input = numpy.mean(input)
+    mean_output = numpy.mean(output)
+
+    SSxy = (numpy.sum(output * input) - (amount_data * mean_output * mean_input))
+    SSxx = (numpy.sum(input * input) - (amount_data * mean_input * mean_input))
+
+    theta_1 = SSxy / SSxx
+    theta_0 = mean_output - (theta_1 * mean_input)
+    print('The hypotesis: h(x) = {} + {} * x'.format(theta_0, theta_1))
+    return theta_0, theta_1    # calculating the parameters of the hypothesis
+
+def plot_graph(input, output, theta):
+    # Hypothesis of the best fitting linear function
+    hypothesis = theta[0] + theta[1] * input
+    plt.scatter(input, output)
+    plt.plot(input, hypothesis)
+    plt.xlabel('Age of a person')
+    plt.ylabel('cost of health insurance [$]')
+    plt.show()
+
+
+# data: the cost for health insurance by age
+input = numpy.array([32, 31, 25, 23, 56, 23, 56, 28, 40, 19, 37, 53, 47])
+output = numpy.array([3866, 3656, 2721, 1826, 11090, 2395, 10602, 4133, 6571, 2331, 4646, 11163, 10115])
+theta = hypothesis(input, output)
+plot_graph(input, output, theta)
+
